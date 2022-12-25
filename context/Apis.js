@@ -1,9 +1,11 @@
-import { FINANCE_API_URL as API_URL } from "@env";
+// import { FINANCE_API_URL as API_URL } from "@env";
+
+let API_URL = "http://finance.apis.com:8000";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {
   let resp = await fetch(`${API_URL}/login/`, {
-    method: "POST",
+    method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(info),
   });
@@ -14,7 +16,7 @@ export async function loginUser(info) {
 // This Api should be in AuthContext
 export async function registerUser(info) {
   let resp = await fetch(`${API_URL}/register-user/`, {
-    method: "POST",
+    method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(info),
   });
@@ -36,17 +38,16 @@ function createRequest(request_method, request_data, token, is_default = true) {
   if (token !== null && token !== undefined) {
     headers["access"] = `Bearer ${token}`;
   }
-
+  req["headers"] = headers;
   req["method"] = request_method;
   if (
     request_data !== {} &&
     request_data !== null &&
     request_data !== undefined &&
-    (request_method === "POST" || request_method === "PATCH")
+    (request_method === "post" || request_method === "patch")
   ) {
     req["body"] = JSON.stringify(request_data);
   }
-  req["headers"] = headers;
   return req;
 }
 
@@ -69,7 +70,6 @@ function updateUrlFilter(url, filters) {
       new_url += "/";
     }
   }
-  console.log("url", new_url, url);
   return new_url;
 }
 
@@ -81,11 +81,15 @@ export async function CreateApiContext(
   token = null
 ) {
   // create the API context, sends the request to API.
-  let URL = `${API_URL}${api_point}`;
-  URL = updateUrlFilter(URL, filters);
-  let req = createRequest(request_method, request_data, token);
-  console.log(req);
-  let resp = await fetch(URL, req);
-  let resp_json = await resp.json();
-  return resp_json;
+  try {
+    let URL = updateUrlFilter(`${API_URL}${api_point}`, filters);
+    let req = createRequest(request_method, request_data, token);
+    console.log("request info::>>>", URL, req);
+    let resp = await fetch(URL, req);
+    console.log("resp from Api context:>>>", resp);
+    let resp_json = await resp.json();
+    return resp_json;
+  } catch (e) {
+    console.log("got error:", e);
+  }
 }
