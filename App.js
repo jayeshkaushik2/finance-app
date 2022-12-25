@@ -21,7 +21,7 @@ export default function App() {
       <NavigationContainer>
         <AuthState>
           <AppBar />
-          <Stack.Navigator initialRouteName="login">
+          <Stack.Navigator initialRouteName="home">
             {/* authentication pages start */}
             <Stack.Screen
               name="login"

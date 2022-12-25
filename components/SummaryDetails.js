@@ -44,7 +44,6 @@ const SummaryDetails = () => {
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 10,
-        marginBotton: 10,
       }}
     >
       <Card style={{ width: "100%", backgroundColor: "white" }}>
