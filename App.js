@@ -13,6 +13,7 @@ import Incomes from "./screens/Incomes";
 import Home from "./screens/Home";
 import Spendings from "./screens/Spendings";
 import AppBar from "./components/AppBar";
+import FABGroup from "./components/FABGroup";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -67,6 +68,7 @@ export default function App() {
             />
             {/* home pages end */}
           </Stack.Navigator>
+          <FABGroup />
         </AuthState>
       </NavigationContainer>
     </PaperProvider>

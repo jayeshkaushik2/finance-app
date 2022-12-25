@@ -14,10 +14,6 @@ function AppBar(props) {
         style={{
           margin: 0,
           marginTop: -10,
-          // shadowColor: "black",
-          // shadowOffset: { width: 1, height: 1 },
-          // shadowOpacity: 1,
-          // shadowRadius: 1,
         }}
       >
         <Appbar.Content
