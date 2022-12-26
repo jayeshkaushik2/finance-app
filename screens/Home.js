@@ -25,10 +25,10 @@ const Home = () => {
           marginTop: 10,
         }}
       >
-        <View id="incomes">
+        <View id="incomes" style={{ width: "100%" }}>
           <IncomeDetails />
         </View>
-        <View id="spendings">
+        <View id="spendings" style={{ width: "100%" }}>
           <SpendingDetails />
         </View>
         <View id="summary" style={{ width: "100%" }}>

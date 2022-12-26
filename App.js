@@ -68,7 +68,7 @@ export default function App() {
             />
             {/* home pages end */}
           </Stack.Navigator>
-          <FABGroup />
+          {/* <FABGroup /> */}
         </AuthState>
       </NavigationContainer>
     </PaperProvider>

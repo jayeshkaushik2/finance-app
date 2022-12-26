@@ -62,7 +62,7 @@ const AuthState = ({ children }) => {
 
   let userData = {
     user: User,
-    AuthToken: AuthToken,
+    AuthTokens: AuthToken,
     login: Login,
     loginUser: LoginUser,
     logoutUser: LogoutUser,

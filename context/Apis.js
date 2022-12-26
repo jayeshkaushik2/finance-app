@@ -1,6 +1,6 @@
 // import { FINANCE_API_URL as API_URL } from "@env";
 
-let API_URL = "http://finance.apis.com:8000";
+let API_URL = "http://localhost:8000";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {
