@@ -1,6 +1,6 @@
 // import { FINANCE_API_URL as API_URL } from "@env";
 
-let API_URL = "http://localhost:8000";
+let API_URL = "https://cd25-2402-8100-2039-833d-4cab-bdf-ab43-2032.in.ngrok.io";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {
@@ -36,7 +36,7 @@ function createRequest(request_method, request_data, token, is_default = true) {
   }
 
   if (token !== null && token !== undefined) {
-    headers["access"] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
   req["headers"] = headers;
   req["method"] = request_method;
@@ -86,9 +86,7 @@ export async function CreateApiContext(
     let req = createRequest(request_method, request_data, token);
     console.log("request info::>>>", URL, req);
     let resp = await fetch(URL, req);
-    console.log("resp from Api context:>>>", resp);
-    let resp_json = await resp.json();
-    return resp_json;
+    return resp;
   } catch (e) {
     console.log("got error:", e);
   }

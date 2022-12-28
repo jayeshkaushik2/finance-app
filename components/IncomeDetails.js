@@ -15,26 +15,30 @@ const IncomeDetails = () => {
 
   const getIncomeDetails = async () => {
     try {
-      let token = AuthTokens?.access;
-      let resp = await CreateApiContext(
+      // let token = AuthTokens?.access;
+      let token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjM5MzQ4LCJpYXQiOjE2NzIyMzc1NDgsImp0aSI6ImYyMWEwMDY4M2I4ZDQyYjFiNGRiNjlkMDQ2MmJlMWVhIiwidXNlcl9pZCI6Mn0.ZaK4m5vLbq_9gDGhwkfQ0MgZVujXAzpyNfkwPchMDDw";
+      let response = await CreateApiContext(
         `/income-report/${Weeks}/`,
         "get",
         null,
         null,
         token
       );
-      let tempLables = [];
-      let tempDataSet = [];
-      console.log("resp data", resp);
-      let temp = await resp.json();
-      for (let i = 0; i < temp.length; i++) {
-        tempLables.push(temp[i]?.month);
-        tempDataSet.push(temp[i]?.salary);
+      let temp = await response.json();
+      // console.log("response data:", temp);
+      if (response.ok) {
+        let tempLables = [];
+        let tempDataSet = [];
+        for (let i = 0; i < temp.slice(0, 5).length; i++) {
+          tempLables.push(temp[i]?.month);
+          tempDataSet.push(temp[i]?.salary);
+        }
+        setLables(tempLables);
+        setDataSet(tempDataSet);
       }
-      setLables(tempLables);
-      setDataSet(tempDataSet);
     } catch (e) {
-      console.log(e);
+      console.log("error occured while fetching", e);
     }
   };
 
@@ -47,13 +51,14 @@ const IncomeDetails = () => {
       style={{
         marginLeft: "auto",
         marginRight: "auto",
+        width: "95%",
       }}
     >
       <Card
         style={{
-          width: Dimensions.get("window").width,
+          width: "100%",
           backgroundColor: "white",
-          borderRadius: 15,
+          borderRadius: 10,
         }}
       >
         <Card.Title
@@ -75,7 +80,7 @@ const IncomeDetails = () => {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 10}
+            width={Dimensions.get("window").width - 19} // from react-native
             height={220}
             yAxisLabel="$"
             yAxisSuffix="k"
@@ -83,7 +88,7 @@ const IncomeDetails = () => {
             chartConfig={chartConfig}
             bezier
             style={{
-              borderRadius: 15,
+              borderRadius: 10,
             }}
           />
         ) : (
@@ -105,7 +110,7 @@ const chartConfig = {
   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   style: {
-    borderRadius: 16,
+    borderRadius: 10,
   },
   propsForDots: {
     r: "6",

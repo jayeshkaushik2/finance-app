@@ -15,24 +15,32 @@ const SpendingDetails = () => {
   const { AuthTokens } = useContext(AuthContext);
 
   const getSpendingDetails = async () => {
-    let token = AuthTokens?.access;
-    let resp = await CreateApiContext(
-      `/income-report/${Weeks}/`,
-      "get",
-      null,
-      null,
-      token
-    );
-    console.log("resp data", resp);
-    let tempLables = [];
-    let tempDataSet = [];
-    let temp = await resp.json();
-    for (let i = 0; i < temp.length; i++) {
-      tempLables.push(temp[i]?.month);
-      tempDataSet.push(temp[i]?.spent_money);
+    try {
+      // let token = AuthTokens?.access;
+      let token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjM5MzQ4LCJpYXQiOjE2NzIyMzc1NDgsImp0aSI6ImYyMWEwMDY4M2I4ZDQyYjFiNGRiNjlkMDQ2MmJlMWVhIiwidXNlcl9pZCI6Mn0.ZaK4m5vLbq_9gDGhwkfQ0MgZVujXAzpyNfkwPchMDDw";
+      let response = await CreateApiContext(
+        `/spending-report/${Weeks}/`,
+        "get",
+        null,
+        null,
+        token
+      );
+      let temp = await response.json();
+      console.log("response data:", temp);
+      if (response.ok) {
+        let tempLables = [];
+        let tempDataSet = [];
+        for (let i = 0; i < temp.slice(0, 5).length; i++) {
+          tempLables.push(temp[i]?.month);
+          tempDataSet.push(temp[i]?.spent_money);
+        }
+        setLables(tempLables);
+        setDataSet(tempDataSet);
+      }
+    } catch (e) {
+      console.log("got error while fetching", e);
     }
-    setLables(tempLables);
-    setDataSet(tempDataSet);
   };
 
   useEffect(() => {
@@ -44,14 +52,16 @@ const SpendingDetails = () => {
       style={{
         marginLeft: "auto",
         marginRight: "auto",
+        width: "95%",
         marginTop: 10,
       }}
     >
       <Card
         style={{
-          width: Dimensions.get("window").width,
+          width: "100%",
+          // width: Dimensions.get("window").width,
           backgroundColor: "white",
-          borderRadius: 15,
+          borderRadius: 10,
         }}
       >
         <Card.Title
@@ -73,14 +83,14 @@ const SpendingDetails = () => {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 10} // from react-native
+            width={Dimensions.get("window").width - 19} // from react-native
             height={220}
             yAxisLabel="$"
             yAxisSuffix="k"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={chartConfig}
             style={{
-              borderRadius: 15,
+              borderRadius: 10,
             }}
           />
         ) : (
@@ -106,7 +116,7 @@ const chartConfig = {
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   style: {
-    borderRadius: 16,
+    borderRadius: 10,
   },
   propsForDots: {
     r: "6",

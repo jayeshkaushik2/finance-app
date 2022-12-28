@@ -9,16 +9,25 @@ function AppBar(props) {
   const styles = CommonStyles();
 
   return (
-    <View style={{ marginTop: StatusBar.currentHeight, margin: 0 }}>
+    <View
+      style={{
+        marginTop: StatusBar.currentHeight,
+        margin: 0,
+      }}
+    >
       <Appbar.Header
         style={{
+          backgroundColor: "black",
+          height: 25,
+          padding: 0,
           margin: 0,
-          marginTop: -10,
         }}
       >
         <Appbar.Content
+          color="white"
           title="FINANCE ₹"
           titleStyle={{
+            marginTop: -13,
             fontSize: 25,
             fontWeight: "bold",
             fontStyle: "italic",

@@ -30,25 +30,31 @@ const AuthState = ({ children }) => {
 
   let LoginUser = async (e, info, props, next_page) => {
     console.log("login User...");
-    let res = await CreateApiContext("/login/", "post", info);
-    setAuthToken(res);
-    setUser(jwt_decode(res.access));
-    setLogin("Logout");
-    AsyncStorageFunction("set", "AuthToken", JSON.stringify(res));
-    props?.navigation.navigate(next_page);
+    let response = await CreateApiContext("/login/", "post", info);
+    let data = await response.json();
+    if (response.ok) {
+      setAuthToken(data);
+      setUser(jwt_decode(data.access));
+      setLogin("Logout");
+      AsyncStorageFunction("set", "AuthToken", JSON.stringify(data));
+      props?.navigation.navigate(next_page);
+    } else console.log("unable to login...", data);
   };
 
   let RefreshUserAccess = async () => {
     let res = await CreateApiContext("/token/refresh/", "post", {
       refresh: AuthToken.refresh,
     });
-    if (res.status === 200) {
-      setAuthToken(res);
-      setUser(jwt_decode(res.access));
-      AsyncStorageFunction("set", "AuthToken", JSON.stringify(res));
-    } else {
-      LogoutUser();
-    }
+    let data = await response.json();
+    if (response.ok) {
+      if (res.status === 200) {
+        setAuthToken(res);
+        setUser(jwt_decode(data.access));
+        AsyncStorageFunction("set", "AuthToken", JSON.stringify(data));
+      } else {
+        LogoutUser();
+      }
+    } else console.log("unable to login...", data);
   };
 
   const LogoutUser = (props, next_page) => {
