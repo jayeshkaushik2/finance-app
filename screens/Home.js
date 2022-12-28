@@ -13,7 +13,7 @@ const Home = () => {
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
-        backgroundColor: "#eeeeee",
+        backgroundColor: "#e0e0e0",
       }}
     >
       <View

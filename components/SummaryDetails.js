@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 import {
@@ -11,32 +11,75 @@ import {
 } from "react-native-paper";
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
+import { CreateApiContext } from "../context/Apis";
 const screenWidth = Dimensions.get("window").width;
+import { ActivityIndicator } from "react-native-paper";
 
+// summary-report
 const SummaryDetails = () => {
-  const data = [
+  const [SummaryData, setSummaryData] = React.useState(null);
+
+  const getSummaryDetails = async () => {
+    try {
+      // let token = AuthTokens?.access;
+      let token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjQxNTk5LCJpYXQiOjE2NzIyMzk3OTksImp0aSI6IjVmMTAxOTdlZGNlYTQ5OTBiMzQxYTUxYzdkNDU5OGQ2IiwidXNlcl9pZCI6Mn0.2Qy9nmND1rFrC536SxHCCOSrFTbkeUAtw9lorG8bnwU";
+      let response = await CreateApiContext(
+        `/summary-report/`,
+        "get",
+        null,
+        null,
+        token
+      );
+      let temp = await response.json();
+      // console.log("response data:", temp);
+      if (response.ok) {
+        // let data = [];
+        // for (var key in temp) {
+        //   data.push({
+        //     name: key,
+        //     income: temp[key],
+        //     color: "#ff5722",
+        //     legendFontColor: "#7F7F7F",
+        //     legendFontSize: 13,
+        //   });
+        // }
+        // console.log("daat", data);
+        // setSummaryData(data);
+        setSummaryData(temp);
+      }
+    } catch (e) {
+      console.log("error occured while fetching", e);
+    }
+  };
+
+  let dd = [
     {
-      name: "total income",
-      income: 1000,
       color: "#ff5722",
+      income: 40000,
       legendFontColor: "#7F7F7F",
       legendFontSize: 13,
+      name: "total_income",
     },
     {
-      name: "total spending",
-      income: 500,
-      color: "#0091ea",
+      color: "#ff5722",
+      income: 310583,
       legendFontColor: "#7F7F7F",
       legendFontSize: 13,
+      name: "total_spending",
     },
     {
-      name: "total income",
-      income: 500,
-      color: "#18ffff",
+      color: "#ff5722",
+      income: -270583,
       legendFontColor: "#7F7F7F",
       legendFontSize: 13,
+      name: "total_saving",
     },
   ];
+
+  useEffect(() => {
+    getSummaryDetails();
+  }, []);
   return (
     <View
       style={{
@@ -57,38 +100,52 @@ const SummaryDetails = () => {
           }}
         />
         <Card.Content>
-          <DataTable>
-            <DataTable.Row>
-              <DataTable.Cell textStyle={{ fontWeight: "bold", fontSize: 20 }}>
-                Total Income
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
-                1000 ₹
-              </DataTable.Cell>
-            </DataTable.Row>
+          {SummaryData !== null ? (
+            <DataTable>
+              <DataTable.Row>
+                <DataTable.Cell
+                  textStyle={{ fontWeight: "bold", fontSize: 20 }}
+                >
+                  Total Income
+                </DataTable.Cell>
+                <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
+                  {SummaryData?.total_income} ₹
+                </DataTable.Cell>
+              </DataTable.Row>
 
-            <DataTable.Row>
-              <DataTable.Cell textStyle={{ fontWeight: "bold", fontSize: 20 }}>
-                Total Spending
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
-                - 500 ₹
-              </DataTable.Cell>
-            </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell
+                  textStyle={{ fontWeight: "bold", fontSize: 20 }}
+                >
+                  Total Spending
+                </DataTable.Cell>
+                <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
+                  - {SummaryData?.total_spending} ₹
+                </DataTable.Cell>
+              </DataTable.Row>
 
-            <DataTable.Row>
-              <DataTable.Cell textStyle={{ fontWeight: "bold", fontSize: 20 }}>
-                Savings
-              </DataTable.Cell>
-              <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
-                500 ₹
-              </DataTable.Cell>
-            </DataTable.Row>
-          </DataTable>
+              <DataTable.Row>
+                <DataTable.Cell
+                  textStyle={{ fontWeight: "bold", fontSize: 20 }}
+                >
+                  Savings
+                </DataTable.Cell>
+                <DataTable.Cell textStyle={{ fontSize: 20 }} numeric>
+                  {SummaryData?.total_saving} ₹
+                </DataTable.Cell>
+              </DataTable.Row>
+            </DataTable>
+          ) : (
+            <ActivityIndicator
+              style={{ margin: 10 }}
+              animating={true}
+              color="black"
+            />
+          )}
         </Card.Content>
       </Card>
 
-      <View style={{ marginTop: 10 }}>
+      {/* <View style={{ marginTop: 10 }}>
         <PieChart
           data={data}
           width={screenWidth}
@@ -104,7 +161,7 @@ const SummaryDetails = () => {
             width: "100%",
           }}
         />
-      </View>
+      </View> */}
     </View>
   );
 };

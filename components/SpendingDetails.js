@@ -18,7 +18,7 @@ const SpendingDetails = () => {
     try {
       // let token = AuthTokens?.access;
       let token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjM5MzQ4LCJpYXQiOjE2NzIyMzc1NDgsImp0aSI6ImYyMWEwMDY4M2I4ZDQyYjFiNGRiNjlkMDQ2MmJlMWVhIiwidXNlcl9pZCI6Mn0.ZaK4m5vLbq_9gDGhwkfQ0MgZVujXAzpyNfkwPchMDDw";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjQxNTk5LCJpYXQiOjE2NzIyMzk3OTksImp0aSI6IjVmMTAxOTdlZGNlYTQ5OTBiMzQxYTUxYzdkNDU5OGQ2IiwidXNlcl9pZCI6Mn0.2Qy9nmND1rFrC536SxHCCOSrFTbkeUAtw9lorG8bnwU";
       let response = await CreateApiContext(
         `/spending-report/${Weeks}/`,
         "get",
@@ -27,7 +27,7 @@ const SpendingDetails = () => {
         token
       );
       let temp = await response.json();
-      console.log("response data:", temp);
+      // console.log("response data:", temp);
       if (response.ok) {
         let tempLables = [];
         let tempDataSet = [];
