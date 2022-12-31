@@ -32,18 +32,20 @@ const AuthState = ({ children }) => {
     console.log("login User...");
     let response = await CreateApiContext("/login/", "post", info);
     let data = await response.json();
+    // console.log("login data", data);
+    console.log("next_page", next_page);
     if (response.ok) {
-      setAuthToken(data);
-      setUser(jwt_decode(data.access));
+      setAuthToken(data?.tokens);
+      setUser(jwt_decode(data?.tokens?.access));
       setLogin("Logout");
-      AsyncStorageFunction("set", "AuthToken", JSON.stringify(data));
+      AsyncStorageFunction("set", "AuthToken", JSON.stringify(data?.tokens));
       props?.navigation.navigate(next_page);
     } else console.log("unable to login...", data);
   };
 
   let RefreshUserAccess = async () => {
     let res = await CreateApiContext("/token/refresh/", "post", {
-      refresh: AuthToken.refresh,
+      refresh: AuthToken?.refresh,
     });
     let data = await response.json();
     if (response.ok) {

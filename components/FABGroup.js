@@ -1,10 +1,10 @@
-import React from "react";
-import { FAB, Portal, Provider, Text } from "react-native-paper";
+import * as React from "react";
+import { StyleSheet } from "react-native";
+import { FAB, Portal } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
-import { View } from "react-native";
 
-const FABGroup = () => {
+const FABGroup = (props) => {
   const IncomeIcon = <MaterialCommunityIcons name="currency-inr" />;
   const SpendingIcon = <MaterialCommunityIcons name="money-check-alt" />;
   const ProfileIcon = <Entypo name="user" />;
@@ -12,8 +12,24 @@ const FABGroup = () => {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
 
+  const handleIncomeClick = () => {
+    props?.navigate?.navigation?.navigate("income");
+  };
+
+  const handleSpendingClick = () => {
+    props?.navigate?.navigation?.navigate("spending");
+  };
+
+  const handleProfileClick = () => {
+    props?.navigate?.navigation?.navigate("profile");
+  };
+
+  const handleHomeClick = () => {
+    props?.navigate?.navigation?.navigate("home");
+  };
+
   return (
-    <Provider>
+    <>
       <Portal style={{ backgroundColor: "green" }}>
         <FAB.Group
           open={open}
@@ -33,34 +49,35 @@ const FABGroup = () => {
           }}
           actions={[
             {
-              icon: IncomeIcon,
+              icon: "email",
               label: "Income",
               color: "black",
-              onPress: () => console.log("Pressed Income"),
+              onPress: () => handleIncomeClick(),
             },
             {
-              icon: SpendingIcon,
+              icon: "bell",
               label: "Spending",
               color: "black",
-              onPress: () => console.log("Pressed Spending"),
+              onPress: () => handleSpendingClick(),
             },
             {
-              icon: ProfileIcon,
+              icon: "bell",
               label: "Profile",
               color: "black",
-              onPress: () => console.log("Pressed Profile"),
+              onPress: () => handleProfileClick(),
             },
-            { icon: "plus", onPress: () => console.log("Pressed add") },
+            {
+              icon: "home",
+              label: "home",
+              color: "black",
+              onPress: () => handleHomeClick(),
+            },
+            { icon: "plus", onPress: null },
           ]}
           onStateChange={onStateChange}
-          onPress={() => {
-            if (open) {
-              // do something if the speed dial is open
-            }
-          }}
         />
       </Portal>
-    </Provider>
+    </>
   );
 };
 

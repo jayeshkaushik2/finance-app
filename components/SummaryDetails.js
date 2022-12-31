@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 import {
@@ -9,21 +9,20 @@ import {
   Paragraph,
   DataTable,
 } from "react-native-paper";
-import { PieChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
 import { CreateApiContext } from "../context/Apis";
-const screenWidth = Dimensions.get("window").width;
 import { ActivityIndicator } from "react-native-paper";
+import AuthContext from "../context/AuthContext";
+import { List } from "react-native-paper";
 
 // summary-report
 const SummaryDetails = () => {
+  const [ShowImg, setShowImg] = React.useState(false);
   const [SummaryData, setSummaryData] = React.useState(null);
+  const { AuthTokens } = useContext(AuthContext);
 
   const getSummaryDetails = async () => {
     try {
-      // let token = AuthTokens?.access;
-      let token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjQxNTk5LCJpYXQiOjE2NzIyMzk3OTksImp0aSI6IjVmMTAxOTdlZGNlYTQ5OTBiMzQxYTUxYzdkNDU5OGQ2IiwidXNlcl9pZCI6Mn0.2Qy9nmND1rFrC536SxHCCOSrFTbkeUAtw9lorG8bnwU";
+      let token = AuthTokens?.access;
       let response = await CreateApiContext(
         `/summary-report/`,
         "get",
@@ -47,9 +46,10 @@ const SummaryDetails = () => {
         // console.log("daat", data);
         // setSummaryData(data);
         setSummaryData(temp);
+        console.log("summary data", temp);
       }
     } catch (e) {
-      console.log("error occured while fetching", e);
+      console.log("error occured while spending fetching", e);
     }
   };
 
@@ -87,6 +87,7 @@ const SummaryDetails = () => {
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: 10,
+        marginBottom: 60,
       }}
     >
       <Card style={{ width: "100%", backgroundColor: "white" }}>
@@ -143,6 +144,13 @@ const SummaryDetails = () => {
             />
           )}
         </Card.Content>
+        {ShowImg === true ? (
+          <List.Image
+            variant="image"
+            style={{ marginLeft: "auto", marginRight: "auto", margin: 15 }}
+            source={require("../assets/not_found.png")}
+          />
+        ) : null}
       </Card>
 
       {/* <View style={{ marginTop: 10 }}>

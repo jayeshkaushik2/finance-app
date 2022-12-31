@@ -6,6 +6,7 @@ import { Dimensions } from "react-native";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
 import { ActivityIndicator } from "react-native-paper";
+import { List } from "react-native-paper";
 
 // spending-report
 const SpendingDetails = () => {
@@ -13,12 +14,11 @@ const SpendingDetails = () => {
   const [DataSet, setDataSet] = React.useState(null);
   const [Weeks, setWeeks] = React.useState(10);
   const { AuthTokens } = useContext(AuthContext);
+  const [ShowImg, setShowImg] = React.useState(false);
 
   const getSpendingDetails = async () => {
     try {
-      // let token = AuthTokens?.access;
-      let token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjcyMjQxNTk5LCJpYXQiOjE2NzIyMzk3OTksImp0aSI6IjVmMTAxOTdlZGNlYTQ5OTBiMzQxYTUxYzdkNDU5OGQ2IiwidXNlcl9pZCI6Mn0.2Qy9nmND1rFrC536SxHCCOSrFTbkeUAtw9lorG8bnwU";
+      let token = AuthTokens?.access;
       let response = await CreateApiContext(
         `/spending-report/${Weeks}/`,
         "get",
@@ -29,14 +29,18 @@ const SpendingDetails = () => {
       let temp = await response.json();
       // console.log("response data:", temp);
       if (response.ok) {
-        let tempLables = [];
-        let tempDataSet = [];
-        for (let i = 0; i < temp.slice(0, 5).length; i++) {
-          tempLables.push(temp[i]?.month);
-          tempDataSet.push(temp[i]?.spent_money);
+        if (temp?.length > 0) {
+          let tempLables = [];
+          let tempDataSet = [];
+          for (let i = 0; i < temp.slice(0, 5).length; i++) {
+            tempLables.push(temp[i]?.month);
+            tempDataSet.push(temp[i]?.spent_money);
+          }
+          setLables(tempLables);
+          setDataSet(tempDataSet);
+        } else {
+          setShowImg(true);
         }
-        setLables(tempLables);
-        setDataSet(tempDataSet);
       }
     } catch (e) {
       console.log("got error while fetching", e);
@@ -46,6 +50,8 @@ const SpendingDetails = () => {
   useEffect(() => {
     getSpendingDetails();
   }, []);
+
+  console.log(Lables, DataSet);
 
   return (
     <View
@@ -59,7 +65,6 @@ const SpendingDetails = () => {
       <Card
         style={{
           width: "100%",
-          // width: Dimensions.get("window").width,
           backgroundColor: "white",
           borderRadius: 10,
         }}
@@ -73,7 +78,10 @@ const SpendingDetails = () => {
             fontSize: 25,
           }}
         />
-        {Lables !== null && DataSet !== null ? (
+        {Lables !== null &&
+        Lables?.length > 0 &&
+        DataSet !== null &&
+        DataSet?.length > 0 ? (
           <BarChart
             data={{
               labels: Lables,
@@ -95,11 +103,20 @@ const SpendingDetails = () => {
           />
         ) : (
           <ActivityIndicator
-            style={{ margin: 10 }}
+            style={{
+              margin: 10,
+            }}
             animating={true}
             color="black"
           />
         )}
+        {ShowImg === true ? (
+          <List.Image
+            variant="image"
+            style={{ marginLeft: "auto", marginRight: "auto", margin: 15 }}
+            source={require("../assets/not_found.png")}
+          />
+        ) : null}
       </Card>
     </View>
   );

@@ -5,8 +5,10 @@ import IncomeDetails from "../components/IncomeDetails";
 import SpendingDetails from "../components/SpendingDetails";
 import SummaryDetails from "../components/SummaryDetails";
 import CommonStyles from "../Themes/StyleSheet";
+import { Dimensions } from "react-native";
+import FABGroup from "../components/FABGroup";
 
-const Home = () => {
+const Home = (props) => {
   const styles = CommonStyles();
 
   return (
@@ -19,10 +21,10 @@ const Home = () => {
       <View
         style={{
           marginTop: StatusBar.currentHeight + 20,
-          justifyContent: "center",
           alignItems: "center",
           marginBottom: 20,
           marginTop: 10,
+          minHeight: Dimensions.get("window").height,
         }}
       >
         <View id="incomes" style={{ width: "100%" }}>
@@ -35,6 +37,7 @@ const Home = () => {
           <SummaryDetails />
         </View>
       </View>
+      <FABGroup navigate={props} />
     </ScrollView>
   );
 };

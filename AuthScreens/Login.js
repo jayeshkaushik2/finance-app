@@ -32,7 +32,7 @@ function Login(props) {
         email: email,
         password: password,
       };
-      loginUser(null, data, props, "signup");
+      loginUser(null, data, props, "home");
     } catch (error) {
       setShowLoading(false);
     }

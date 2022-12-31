@@ -1,6 +1,6 @@
 // import { FINANCE_API_URL as API_URL } from "@env";
 
-let API_URL = "https://cd25-2402-8100-2039-833d-4cab-bdf-ab43-2032.in.ngrok.io";
+let API_URL = "https://82bc-1-187-255-139.in.ngrok.io";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {
@@ -25,7 +25,12 @@ export async function registerUser(info) {
 }
 
 // added Create API context functionality
-function createRequest(request_method, request_data, token, is_default = true) {
+function createRequest(
+  request_method,
+  request_data = {},
+  token,
+  is_default = true
+) {
   // creates the request info for the fetch request.
   let req = {};
   let headers = {};
@@ -40,8 +45,8 @@ function createRequest(request_method, request_data, token, is_default = true) {
   }
   req["headers"] = headers;
   req["method"] = request_method;
+  console.log(headers, request_method);
   if (
-    request_data !== {} &&
     request_data !== null &&
     request_data !== undefined &&
     (request_method === "post" || request_method === "patch")
@@ -66,9 +71,6 @@ function updateUrlFilter(url, filters) {
       }
       is_changed = true;
     }
-    if (is_changed == true) {
-      new_url += "/";
-    }
   }
   return new_url;
 }
@@ -84,7 +86,7 @@ export async function CreateApiContext(
   try {
     let URL = updateUrlFilter(`${API_URL}${api_point}`, filters);
     let req = createRequest(request_method, request_data, token);
-    console.log("request info::>>>", URL, req);
+    console.log(URL);
     let resp = await fetch(URL, req);
     return resp;
   } catch (e) {

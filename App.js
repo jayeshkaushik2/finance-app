@@ -9,11 +9,11 @@ import VerifyForgotPassOtp from "./AuthScreens/VerifyForgotPassOtp";
 import Register from "./AuthScreens/Register";
 import VerifyRegisterUserOtp from "./AuthScreens/VerifyRegisterUserOtp";
 import AuthState from "./context/AuthState";
-import Incomes from "./screens/Incomes";
+import Income from "./screens/Income";
 import Home from "./screens/Home";
-import Spendings from "./screens/Spendings";
+import Spending from "./screens/Spending";
 import AppBar from "./components/AppBar";
-import FABGroup from "./components/FABGroup";
+import Profile from "./screens/Profile";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -22,7 +22,7 @@ export default function App() {
       <NavigationContainer>
         <AuthState>
           <AppBar />
-          <Stack.Navigator initialRouteName="home">
+          <Stack.Navigator initialRouteName="login">
             {/* authentication pages start */}
             <Stack.Screen
               name="login"
@@ -57,18 +57,23 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="incomes"
-              component={Incomes}
+              name="income"
+              component={Income}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="spendings"
-              component={Spendings}
+              name="spending"
+              component={Spending}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="profile"
+              component={Profile}
+              options={{ headerShown: false }}
+            />
+
             {/* home pages end */}
           </Stack.Navigator>
-          {/* <FABGroup /> */}
         </AuthState>
       </NavigationContainer>
     </PaperProvider>
