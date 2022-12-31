@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { FAB, Portal } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Entypo from "react-native-vector-icons/Entypo";
+import AuthContext from "../context/AuthContext";
 
 const FABGroup = (props) => {
   const IncomeIcon = <MaterialCommunityIcons name="currency-inr" />;
@@ -11,6 +12,7 @@ const FABGroup = (props) => {
   const [state, setState] = React.useState({ open: false });
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
+  const { logoutUser } = React.useContext(AuthContext);
 
   const handleIncomeClick = () => {
     props?.navigate?.navigation?.navigate("income");
@@ -71,6 +73,12 @@ const FABGroup = (props) => {
               label: "home",
               color: "black",
               onPress: () => handleHomeClick(),
+            },
+            {
+              icon: "logout",
+              label: "Logout",
+              color: "red",
+              onPress: () => logoutUser(props?.navigate, "login"),
             },
             { icon: "plus", onPress: null },
           ]}
