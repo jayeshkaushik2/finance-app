@@ -94,6 +94,7 @@ const SummaryDetails = () => {
         <Card.Title
           title="Summary"
           titleStyle={{
+            marginTop: 10,
             marginLeft: "auto",
             marginRight: "auto",
             fontWeight: "bold",

@@ -72,6 +72,7 @@ const SpendingDetails = () => {
         <Card.Title
           title="Spending"
           titleStyle={{
+            marginTop: 10,
             marginLeft: "auto",
             marginRight: "auto",
             fontWeight: "bold",
@@ -97,9 +98,6 @@ const SpendingDetails = () => {
             yAxisSuffix="k"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={chartConfig}
-            style={{
-              borderRadius: 10,
-            }}
           />
         ) : (
           <ActivityIndicator
@@ -126,12 +124,11 @@ const chartConfig = {
   backgroundGradientFrom: "#2979ff",
   backgroundGradientFromOpacity: 1,
   backgroundGradientTo: "#5393ff",
-  backgroundGradientToOpacity: 0.5,
-  decimalPlaces: 0.5, // optional, defaults to 2dp To change the left side padding
+  decimalPlaces: 0.2, // optional, defaults to 2dp To change the left side padding
   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
+  barPercentage: 0.3,
   style: {
     borderRadius: 10,
   },

@@ -68,6 +68,7 @@ const IncomeDetails = () => {
         <Card.Title
           title="Income"
           titleStyle={{
+            marginTop: 10,
             marginLeft: "auto",
             marginRight: "auto",
             fontWeight: "bold",
@@ -91,9 +92,6 @@ const IncomeDetails = () => {
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={chartConfig}
             bezier
-            style={{
-              borderRadius: 10,
-            }}
           />
         ) : (
           <ActivityIndicator
@@ -117,10 +115,10 @@ const IncomeDetails = () => {
   );
 };
 const chartConfig = {
-  backgroundColor: "#e3f2fd",
-  backgroundGradientFrom: "#0288d1",
-  backgroundGradientTo: "#81d4fa",
-  decimalPlaces: 0.5, // optional, defaults to 2dp
+  backgroundGradientFrom: "#2979ff",
+  backgroundGradientFromOpacity: 1,
+  backgroundGradientTo: "#5393ff",
+  decimalPlaces: 0.8, // optional, defaults to 2dp
   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   style: {
