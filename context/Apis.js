@@ -1,6 +1,7 @@
 // import { FINANCE_API_URL as API_URL } from "@env";
 
-let API_URL = "https://b3a7-2402-3a80-41d2-6b1f-cd1d-99f6-86bd-93.in.ngrok.io";
+let API_URL =
+  "https://2e2b-2402-3a80-41d2-9bea-198e-23c9-4e5e-4a81.in.ngrok.io";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {
@@ -27,9 +28,10 @@ export async function registerUser(info) {
 // added Create API context functionality
 function createRequest(
   request_method,
-  request_data = {},
+  request_data,
   token,
-  is_default = true
+  is_default,
+  data_type
 ) {
   // creates the request info for the fetch request.
   let req = {};
@@ -45,13 +47,23 @@ function createRequest(
   }
   req["headers"] = headers;
   req["method"] = request_method;
-  console.log(headers, request_method);
+
   if (
+    data_type === "json" &&
     request_data !== null &&
     request_data !== undefined &&
     (request_method === "post" || request_method === "patch")
   ) {
+    // handling the json data
     req["body"] = JSON.stringify(request_data);
+  } else if (
+    data_type === "binary" &&
+    request_data !== null &&
+    request_data !== undefined &&
+    (request_method === "post" || request_method === "patch")
+  ) {
+    // handling the binary data
+    req["body"] = request_data;
   }
   return req;
 }
@@ -78,15 +90,23 @@ function updateUrlFilter(url, filters) {
 export async function CreateApiContext(
   api_point,
   request_method,
-  request_data = null,
+  request_data = {},
   filters = null,
-  token = null
+  token = null,
+  data_type = "json",
+  is_default = true
 ) {
   // create the API context, sends the request to API.
   try {
     let URL = updateUrlFilter(`${API_URL}${api_point}`, filters);
-    let req = createRequest(request_method, request_data, token);
-    console.log(URL);
+    let req = createRequest(
+      request_method,
+      request_data,
+      token,
+      is_default,
+      data_type
+    );
+    console.log(URL, req);
     let resp = await fetch(URL, req);
     return resp;
   } catch (e) {
