@@ -107,25 +107,29 @@ const Spending = () => {
           placeholder="Search"
           onChangeText={onChangeSearch}
           value={searchQuery}
-          style={{ borderRadius: 100, width: "50%", marginLeft: "auto" }}
+          style={{ borderRadius: 100, width: "100%", marginLeft: "auto" }}
         />
-        <View id="spending-info" style={{ margin: 10 }}>
+        <View id="spending-info">
           <DataTable>
             <DataTable.Header
-              style={{ backgroundColor: "white", borderRadius: 15 }}
+              style={{
+                backgroundColor: "#e040fb",
+                borderRadius: 15,
+                marginTop: 10,
+              }}
             >
               <DataTable.Title
-                textStyle={{ color: "black", fontSize: 15, fontWeight: "bold" }}
+                textStyle={{ color: "white", fontSize: 15, fontWeight: "bold" }}
               >
                 Month
               </DataTable.Title>
               <DataTable.Title
-                textStyle={{ color: "black", fontSize: 15, fontWeight: "bold" }}
+                textStyle={{ color: "white", fontSize: 15, fontWeight: "bold" }}
               >
                 spent on
               </DataTable.Title>
               <DataTable.Title
-                textStyle={{ color: "black", fontSize: 15, fontWeight: "bold" }}
+                textStyle={{ color: "white", fontSize: 15, fontWeight: "bold" }}
                 numeric
               >
                 money spent
