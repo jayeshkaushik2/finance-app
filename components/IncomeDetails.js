@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
-import { Card } from "react-native-paper";
+import { Button, Card } from "react-native-paper";
 import { Dimensions } from "react-native";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
 import { ActivityIndicator } from "react-native-paper";
 import { List } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const IncomeDetails = () => {
   const [Lables, setLables] = React.useState(null);
@@ -55,20 +56,22 @@ const IncomeDetails = () => {
       style={{
         marginLeft: "auto",
         marginRight: "auto",
-        width: "95%",
+        marginTop: 20,
+        width: "100%",
       }}
     >
       <Card
         style={{
           width: "100%",
-          backgroundColor: "white",
-          borderRadius: 10,
+          backgroundColor: "#ECECEC",
+          borderRadius: 0,
+          paddingBottom: 10,
+          paddingTop: 10,
         }}
       >
         <Card.Title
           title="Income"
           titleStyle={{
-            marginTop: 10,
             marginLeft: "auto",
             marginRight: "auto",
             fontWeight: "bold",
@@ -85,7 +88,7 @@ const IncomeDetails = () => {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 19} // from react-native
+            width={Dimensions.get("window").width} // from react-native
             height={220}
             yAxisLabel="$"
             yAxisSuffix="k"
@@ -110,6 +113,40 @@ const IncomeDetails = () => {
             source={require("../assets/not_found.png")}
           />
         ) : null}
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Button
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#F6A200",
+              marginLeft: 10,
+              marginRight: "auto",
+            }}
+            labelStyle={{
+              fontSize: 17,
+              color: "white",
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+          >
+            View details
+          </Button>
+          <Button
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#0085FF",
+              marginLeft: "auto",
+              marginRight: 10,
+            }}
+            labelStyle={{
+              color: "white",
+              fontSize: 17,
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+          >
+            Add Income
+          </Button>
+        </View>
       </Card>
     </View>
   );

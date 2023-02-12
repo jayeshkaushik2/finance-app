@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
-import { BarChart } from "react-native-chart-kit";
-import { Card } from "react-native-paper";
+import { BarChart, LineChart } from "react-native-chart-kit";
+import { Button, Card } from "react-native-paper";
 import { Dimensions } from "react-native";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
@@ -58,21 +58,22 @@ const SpendingDetails = () => {
       style={{
         marginLeft: "auto",
         marginRight: "auto",
-        width: "95%",
-        marginTop: 10,
+        width: "100%",
+        marginTop: 20,
       }}
     >
       <Card
         style={{
           width: "100%",
-          backgroundColor: "white",
-          borderRadius: 10,
+          backgroundColor: "#ECECEC",
+          borderRadius: 0,
+          paddingBottom: 10,
+          paddingTop: 10,
         }}
       >
         <Card.Title
           title="Spending"
           titleStyle={{
-            marginTop: 10,
             marginLeft: "auto",
             marginRight: "auto",
             fontWeight: "bold",
@@ -83,7 +84,7 @@ const SpendingDetails = () => {
         Lables?.length > 0 &&
         DataSet !== null &&
         DataSet?.length > 0 ? (
-          <BarChart
+          <LineChart
             data={{
               labels: Lables,
               datasets: [
@@ -92,12 +93,13 @@ const SpendingDetails = () => {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 19} // from react-native
+            width={Dimensions.get("window").width} // from react-native
             height={220}
             yAxisLabel="$"
             yAxisSuffix="k"
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={chartConfig}
+            bezier
           />
         ) : (
           <ActivityIndicator
@@ -115,6 +117,40 @@ const SpendingDetails = () => {
             source={require("../assets/not_found.png")}
           />
         ) : null}
+        <View style={{ flexDirection: "row", marginTop: 15 }}>
+          <Button
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#F6A200",
+              marginLeft: 10,
+              marginRight: "auto",
+            }}
+            labelStyle={{
+              fontSize: 17,
+              color: "white",
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+          >
+            View details
+          </Button>
+          <Button
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#0085FF",
+              marginLeft: "auto",
+              marginRight: 10,
+            }}
+            labelStyle={{
+              color: "white",
+              fontSize: 17,
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+          >
+            Add Sending
+          </Button>
+        </View>
       </Card>
     </View>
   );
@@ -124,18 +160,16 @@ const chartConfig = {
   backgroundGradientFrom: "#2979ff",
   backgroundGradientFromOpacity: 1,
   backgroundGradientTo: "#5393ff",
-  decimalPlaces: 0.2, // optional, defaults to 2dp To change the left side padding
+  decimalPlaces: 0.8, // optional, defaults to 2dp
   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.3,
   style: {
     borderRadius: 10,
   },
   propsForDots: {
     r: "6",
     strokeWidth: "2",
-    stroke: "#ffa726",
+    stroke: "#1e88e5",
   },
 };
 

@@ -107,7 +107,7 @@ const Spending = () => {
           placeholder="Search"
           onChangeText={onChangeSearch}
           value={searchQuery}
-          style={{ borderRadius: 100, width: "100%", marginLeft: "auto" }}
+          style={{ borderRadius: 15, width: "100%", marginLeft: "auto" }}
         />
         <View id="spending-info">
           <DataTable>

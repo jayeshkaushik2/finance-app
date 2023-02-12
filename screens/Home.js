@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, StatusBar, View } from "react-native";
-import { Text } from "react-native-paper";
 import IncomeDetails from "../components/IncomeDetails";
 import SpendingDetails from "../components/SpendingDetails";
 import SummaryDetails from "../components/SummaryDetails";
@@ -9,22 +8,17 @@ import { Dimensions } from "react-native";
 import FABGroup from "../components/FABGroup";
 
 const Home = (props) => {
-  const styles = CommonStyles();
-
   return (
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "white",
       }}
     >
       <View
         style={{
-          marginTop: StatusBar.currentHeight + 20,
-          alignItems: "center",
-          marginBottom: 20,
-          marginTop: 10,
           minHeight: Dimensions.get("window").height,
+          marginBottom: 50,
         }}
       >
         <View id="incomes" style={{ width: "100%" }}>
