@@ -19,7 +19,7 @@ function Login(props) {
   const styles = CommonStyles();
   // variables used
   const [showCompanyName, setShowCompanyName] = React.useState(true);
-  const [showGoogleFacebook, setshowGoogleFacebook] = React.useState(true);
+  const [showGoogleFacebook, setshowGoogleFacebook] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
@@ -156,7 +156,7 @@ function Login(props) {
       ) : null}
 
       <View styles={styles.bottom_last_container}>
-        <Text style={{ top: 105 }}>
+        <Text style={{ top: 60 }}>
           Don't have an account?
           <Text style={styles.signup_text} onPress={handleSignup}>
             {" "}
