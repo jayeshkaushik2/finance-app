@@ -6,9 +6,6 @@ import Entypo from "react-native-vector-icons/Entypo";
 import AuthContext from "../context/AuthContext";
 
 const FABGroup = (props) => {
-  const IncomeIcon = <MaterialCommunityIcons name="currency-inr" />;
-  const SpendingIcon = <MaterialCommunityIcons name="money-check-alt" />;
-  const ProfileIcon = <Entypo name="user" />;
   const [state, setState] = React.useState({ open: false });
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;

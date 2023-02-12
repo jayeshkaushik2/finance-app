@@ -70,7 +70,6 @@ function Login(props) {
         flex: 0.8,
       }}
     >
-      <Text style={styles.text_heading}>Company</Text>
       <View style={styles.second_container}>
         <TextInput
           mode="outlined"

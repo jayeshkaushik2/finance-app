@@ -1,7 +1,7 @@
 // import { FINANCE_API_URL as API_URL } from "@env";
 
 let API_URL =
-  "https://2e2b-2402-3a80-41d2-9bea-198e-23c9-4e5e-4a81.in.ngrok.io";
+  "https://eba1-2402-3a80-41e0-2cd7-f048-ec55-c8cc-c6c1.in.ngrok.io";
 
 // This Api should be in AuthContext
 export async function loginUser(info) {

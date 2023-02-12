@@ -1,12 +1,12 @@
-import { Appbar, Text } from "react-native-paper";
+import { Appbar, Avatar, Text, TouchableRipple } from "react-native-paper";
 import React from "react";
 import { StatusBar, View } from "react-native";
 
-// local imports
-import CommonStyles from "../Themes/StyleSheet";
-
 function AppBar(props) {
-  const styles = CommonStyles();
+  const handleProfileClick = () => {
+    console.log("pressed", props);
+    props?.navigation?.navigate("profile");
+  };
 
   return (
     <View
@@ -18,7 +18,7 @@ function AppBar(props) {
       <Appbar.Header
         style={{
           backgroundColor: "black",
-          height: 25,
+          height: 40,
           padding: 0,
           margin: 0,
         }}
@@ -31,10 +31,19 @@ function AppBar(props) {
             fontSize: 25,
             fontWeight: "bold",
             fontStyle: "italic",
-            marginLeft: "auto",
             marginRight: "auto",
           }}
         />
+        <TouchableRipple onPress={() => handleProfileClick()}>
+          <Avatar.Image
+            size={40}
+            source={require("../assets/profile.png")}
+            style={{
+              marginTop: -20,
+              backgroundColor: "white",
+            }}
+          />
+        </TouchableRipple>
       </Appbar.Header>
     </View>
   );
