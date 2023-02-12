@@ -33,6 +33,8 @@ function Login(props) {
         password: password,
       };
       loginUser(null, data, props, "home");
+      setEmail(null);
+      setPassword(null);
     } catch (error) {
       setShowLoading(false);
     }

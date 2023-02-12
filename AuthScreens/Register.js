@@ -66,9 +66,6 @@ function Register(props) {
           flex: 1,
         }}
       >
-        {showCompanyName ? (
-          <Text style={styles.text_heading}>Company</Text>
-        ) : null}
         <View style={styles.second_container}>
           <TextInput
             mode="outlined"

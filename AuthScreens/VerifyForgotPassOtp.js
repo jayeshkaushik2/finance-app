@@ -6,13 +6,8 @@ const colors = {
 };
 
 function VerifyForgotPassOtp(props) {
-  const [showCompanyName, setShowCompanyName] = React.useState(true);
-
   return (
     <View style={styles.container}>
-      {showCompanyName ? (
-        <Text style={styles.text_heading}>Company</Text>
-      ) : null}
       <View style={styles.second_container}>
         <TextInput
           style={styles.input}

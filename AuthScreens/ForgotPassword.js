@@ -45,9 +45,6 @@ function ForgotPassword(props) {
         flex: 0.8,
       }}
     >
-      {showCompanyName ? (
-        <Text style={styles.text_heading}>Company</Text>
-      ) : null}
       <View style={styles.second_container}>
         <TextInput
           mode="outlined"

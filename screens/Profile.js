@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Dimensions,
-  ScrollView,
-  StatusBar,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { Dimensions, ScrollView, StatusBar, View } from "react-native";
 import { Avatar, Text, Button } from "react-native-paper";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
 import * as ImagePicker from "expo-image-picker";
+import Icon from "react-native-vector-icons/Ionicons";
 
-const Profile = () => {
+const Profile = (props) => {
   const [ProfileData, setProfileData] = useState(null);
   const [ProfileImage, setProfileImage] = useState(null);
   const [Username, setUsername] = useState(null);
-  const { AuthTokens } = useContext(AuthContext);
+  const [saveChangeBtnActive, setsaveChangeBtnActive] = useState(true);
+  const { AuthTokens, logoutUser } = useContext(AuthContext);
   let token = AuthTokens?.access;
 
   const getProfileData = async () => {
@@ -44,6 +40,7 @@ const Profile = () => {
 
     if (!result.canceled) {
       setProfileImage(result.assets[0]);
+      setsaveChangeBtnActive(false);
     } else {
       alert("You did not select any image.");
     }
@@ -51,11 +48,11 @@ const Profile = () => {
 
   const updateProfile = async () => {
     try {
-      console.log("updating image...");
       const form_data = new FormData();
       // adding profile image
       let localUri = ProfileImage.uri;
       let filename = localUri.split("/").pop();
+      setsaveChangeBtnActive(true);
       if (ProfileImage !== null && ProfileImage !== undefined) {
         form_data.append("profile_image", { uri: localUri, name: filename });
       }
@@ -80,54 +77,87 @@ const Profile = () => {
     }
   };
 
+  const handleSettingsClick = () => {
+    console.log("settings clicked");
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
-        backgroundColor: "#e0e0e0",
+        flex: 1,
       }}
     >
       <View
         style={{
-          marginTop: StatusBar.currentHeight + 20,
-          marginBottom: 20,
-          marginTop: 10,
-          minHeight: Dimensions.get("window").height,
-          width: "95%",
-          marginLeft: "auto",
-          marginRight: "auto",
+          backgroundColor: "white",
+          flex: 1,
         }}
       >
-        {ProfileData !== null ? (
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-            }}
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {ProfileData?.profile_image !== null &&
+          ProfileData?.profile_image !== "" ? (
+            <Avatar.Image
+              size={70}
+              source={{ uri: ProfileData?.profile_image }}
+              style={{ top: 15 }}
+            />
+          ) : (
+            <Avatar.Icon
+              icon="camera"
+              size={70}
+              style={{ top: 15 }}
+              onPress={() => handleProfileUpload()}
+            />
+          )}
+          <Text
+            variant="headlineSmall"
+            style={{ top: 20, justifyContent: "space-evenly" }}
           >
-            <Button onPress={() => updateProfile()}>Save Changes</Button>
+            {ProfileData?.username}
+          </Text>
 
-            <TouchableOpacity onPress={() => handleProfileUpload()}>
-              {ProfileData?.profile_image !== null &&
-              ProfileData?.profile_image !== "" ? (
-                <Avatar.Image
-                  size={70}
-                  source={{ uri: ProfileData?.profile_image }}
-                />
-              ) : (
-                <Avatar.Icon
-                  icon="camera"
-                  size={70}
-                  onPress={() => handleProfileUpload()}
-                />
-              )}
-            </TouchableOpacity>
-            <Text variant="headlineSmall" style={{ textAlign: "center" }}>
-              {ProfileData?.username}
-            </Text>
-          </View>
-        ) : null}
+          <Icon
+            size={25}
+            color="black"
+            onPress={() => handleProfileUpload()}
+            name="settings-sharp"
+            style={{
+              backgroundColor: "#D9D9D9",
+              borderRadius: 100,
+              marginLeft: 210,
+              padding: 8,
+              top: -17,
+            }}
+          />
+        </View>
+        <Button onPress={() => updateProfile()} disabled={saveChangeBtnActive}>
+          Save Changes
+        </Button>
+
+        <Button
+          icon="login"
+          mode="contained"
+          style={{
+            borderRadius: 10,
+            backgroundColor: "#FF0000",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "100%",
+          }}
+          labelStyle={{
+            fontSize: 17,
+            paddingVertical: 5,
+            letterSpacing: 0.5,
+          }}
+          onPress={() => logoutUser(props, "login")}
+        >
+          Logout
+        </Button>
       </View>
     </ScrollView>
   );
