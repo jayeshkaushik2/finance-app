@@ -4,10 +4,17 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
 import { DataTable } from "react-native-paper";
+import CommonStyles from "../Themes/StyleSheet";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { Searchbar } from "react-native-paper";
 
 const Income = () => {
+  const styles = CommonStyles();
   const { AuthTokens } = useContext(AuthContext);
   let token = AuthTokens?.access;
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const onChangeSearch = (query) => setSearchQuery(query);
+
   const [Lables, setLables] = React.useState(null);
   const [DataSet, setDataSet] = React.useState(null);
   const [IncomeData, setIncomeData] = React.useState(null);
@@ -81,7 +88,7 @@ const Income = () => {
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "white",
       }}
     >
       <View
@@ -95,55 +102,12 @@ const Income = () => {
           marginRight: "auto",
         }}
       >
-        <View id="income-post">
-          <TextInput
-            label="Income source"
-            value={Source}
-            onChangeText={(text) => setSource(text)}
-            mode="outlined"
-            selectionColor="black"
-            outlineStyle={{
-              borderColor: "black",
-              color: "black",
-              borderRadius: 15,
-            }}
-            contentStyle={{ color: "black" }}
-            style={{ margin: 10, height: 60, fontSize: 18 }}
-          />
-          <TextInput
-            label="Salary"
-            value={Salary}
-            keyboardType="number-pad"
-            onChangeText={(text) => setSalary(text)}
-            mode="outlined"
-            selectionColor="black"
-            outlineStyle={{
-              borderColor: "black",
-              color: "black",
-              borderRadius: 15,
-            }}
-            contentStyle={{ color: "black" }}
-            style={{ margin: 10, height: 60, fontSize: 18 }}
-          />
-          <Button
-            mode="contained"
-            labelStyle={{
-              fontSize: 18,
-              marginTop: 0,
-              height: 60,
-              textAlignVertical: "center",
-            }}
-            contentStyle={{ flexDirection: "row-reverse" }}
-            style={{
-              margin: 10,
-              backgroundColor: "black",
-              height: 60,
-            }}
-            onPress={handleIncomeSave}
-          >
-            Save
-          </Button>
-        </View>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={{ borderRadius: 100, width: "50%", marginLeft: "auto" }}
+        />
 
         <View id="income-info" style={{ margin: 10 }}>
           <DataTable>
@@ -187,6 +151,50 @@ const Income = () => {
               optionsLabel={"Rows per page"}
             />
           </DataTable>
+        </View>
+        <View id="income-post">
+          <TextInput
+            mode="outlined"
+            value={Source}
+            selectionColor="black"
+            outlineColor="#e0e0e0"
+            activeOutlineColor="#e0e0e0"
+            dense={true}
+            outlineStyle={styles.custom_outlineStyle}
+            style={styles.input}
+            placeholder="Income source"
+            onChangeText={(value) => setSource(value)}
+          />
+          <TextInput
+            mode="outlined"
+            value={Salary}
+            selectionColor="black"
+            outlineColor="#e0e0e0"
+            activeOutlineColor="#e0e0e0"
+            dense={true}
+            outlineStyle={styles.custom_outlineStyle}
+            style={styles.input}
+            placeholder="Income amount"
+            onChangeText={(value) => setSalary(value)}
+          />
+          <Button
+            mode="contained"
+            icon={<Icon size={25} name="attach-money" />}
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#0085FF",
+              marginLeft: "auto",
+              marginTop: 10,
+            }}
+            labelStyle={{
+              fontSize: 17,
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+            onPress={handleIncomeSave}
+          >
+            Add Income
+          </Button>
         </View>
       </View>
     </ScrollView>

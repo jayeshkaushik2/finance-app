@@ -71,12 +71,6 @@ const FABGroup = (props) => {
               color: "black",
               onPress: () => handleHomeClick(),
             },
-            {
-              icon: "logout",
-              label: "Logout",
-              color: "red",
-              onPress: () => logoutUser(props?.navigate, "login"),
-            },
             { icon: "plus", onPress: null },
           ]}
           onStateChange={onStateChange}

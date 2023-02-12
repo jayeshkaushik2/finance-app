@@ -4,10 +4,18 @@ import { Button, Text, TextInput } from "react-native-paper";
 import { CreateApiContext } from "../context/Apis";
 import AuthContext from "../context/AuthContext";
 import { DataTable } from "react-native-paper";
+import { Searchbar } from "react-native-paper";
+import CommonStyles from "../Themes/StyleSheet";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Spending = () => {
+  const styles = CommonStyles();
+
   const { AuthTokens } = useContext(AuthContext);
   let token = AuthTokens?.access;
+
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const onChangeSearch = (query) => setSearchQuery(query);
   const [Lables, setLables] = React.useState(null);
   const [DataSet, setDataSet] = React.useState(null);
   const [SpendingData, setSpendingData] = React.useState(null);
@@ -81,7 +89,7 @@ const Spending = () => {
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
-        backgroundColor: "#e0e0e0",
+        backgroundColor: "white",
       }}
     >
       <View
@@ -95,56 +103,12 @@ const Spending = () => {
           marginRight: "auto",
         }}
       >
-        <View id="spending-post">
-          <TextInput
-            label="spent on"
-            value={SpentOn}
-            onChangeText={(text) => setSpentOn(text)}
-            mode="outlined"
-            selectionColor="black"
-            outlineStyle={{
-              borderColor: "black",
-              color: "black",
-              borderRadius: 15,
-            }}
-            contentStyle={{ color: "black" }}
-            style={{ margin: 10, height: 60, fontSize: 18 }}
-          />
-          <TextInput
-            label="money spent"
-            value={SpentMoney}
-            keyboardType="number-pad"
-            onChangeText={(text) => setSpentMoney(text)}
-            mode="outlined"
-            selectionColor="black"
-            outlineStyle={{
-              borderColor: "black",
-              color: "black",
-              borderRadius: 15,
-            }}
-            contentStyle={{ color: "black" }}
-            style={{ margin: 10, height: 60, fontSize: 18 }}
-          />
-          <Button
-            mode="contained"
-            labelStyle={{
-              fontSize: 18,
-              marginTop: 0,
-              height: 60,
-              textAlignVertical: "center",
-            }}
-            contentStyle={{ flexDirection: "row-reverse" }}
-            style={{
-              margin: 10,
-              backgroundColor: "black",
-              height: 60,
-            }}
-            onPress={handleSpendingSave}
-          >
-            Save
-          </Button>
-        </View>
-
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={{ borderRadius: 100, width: "50%", marginLeft: "auto" }}
+        />
         <View id="spending-info" style={{ margin: 10 }}>
           <DataTable>
             <DataTable.Header
@@ -187,6 +151,51 @@ const Spending = () => {
               optionsLabel={"Rows per page"}
             />
           </DataTable>
+        </View>
+
+        <View id="spending-post">
+          <TextInput
+            mode="outlined"
+            value={SpentOn}
+            selectionColor="black"
+            outlineColor="#e0e0e0"
+            activeOutlineColor="#e0e0e0"
+            dense={true}
+            outlineStyle={styles.custom_outlineStyle}
+            style={styles.input}
+            placeholder="Spent on"
+            onChangeText={(value) => setSpentOn(value)}
+          />
+          <TextInput
+            mode="outlined"
+            value={SpentMoney}
+            selectionColor="black"
+            outlineColor="#e0e0e0"
+            activeOutlineColor="#e0e0e0"
+            dense={true}
+            outlineStyle={styles.custom_outlineStyle}
+            style={styles.input}
+            placeholder="Spent amount"
+            onChangeText={(value) => setSpentMoney(value)}
+          />
+          <Button
+            mode="contained"
+            icon={<Icon size={25} name="attach-money" />}
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#0085FF",
+              marginLeft: "auto",
+              marginTop: 10,
+            }}
+            labelStyle={{
+              fontSize: 17,
+              paddingVertical: 5,
+              letterSpacing: 0.5,
+            }}
+            onPress={handleSpendingSave}
+          >
+            Add Spending
+          </Button>
         </View>
       </View>
     </ScrollView>

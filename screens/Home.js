@@ -33,9 +33,9 @@ const Home = (props) => {
         <View id="spendings" style={{ width: "100%" }}>
           <SpendingDetails />
         </View>
-        <View id="summary" style={{ width: "100%" }}>
+        {/* <View id="summary" style={{ width: "100%" }}>
           <SummaryDetails />
-        </View>
+        </View> */}
       </View>
       <FABGroup navigate={props} />
     </ScrollView>
