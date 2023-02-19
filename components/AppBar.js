@@ -10,21 +10,15 @@ function AppBar(props) {
     props?.navigation?.navigate("profile");
   };
   const { user, AuthTokens } = React.useContext(AuthContext);
-  let token = AuthTokens?.access;
-
   const [profileData, setProfileData] = React.useState(null);
 
   const getProfileData = async () => {
-    console.log("running api for profile data");
-    if (user === null || token === null) {
-      return;
-    }
     const response = await CreateApiContext(
       "/user-details/",
       "get",
       null,
       null,
-      token
+      AuthTokens?.access
     );
     let data = await response.json();
     if (response.ok) {
@@ -32,9 +26,14 @@ function AppBar(props) {
       setProfileData(data);
     }
   };
-  useEffect(() => {
-    getProfileData();
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     console.log("token  and user", user);
+  //     if (user !== null) {
+  //       getProfileData();
+  //     }
+  //   }, 5 * 1000);
+  // }, []);
 
   return (
     <View
