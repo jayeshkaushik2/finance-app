@@ -35,6 +35,7 @@ function Login(props) {
       loginUser(null, data, props, "home");
       setEmail(null);
       setPassword(null);
+      setShowLoading(false);
     } catch (error) {
       setShowLoading(false);
     }
@@ -82,6 +83,7 @@ function Login(props) {
           outlineStyle={styles.custom_outlineStyle}
           style={styles.input}
           placeholder="Email"
+          value={email}
           onChangeText={(value) => setEmail(value)}
         />
         <TextInput
@@ -94,6 +96,7 @@ function Login(props) {
           style={styles.input}
           secureTextEntry={!showPassword}
           placeholder="Password"
+          value={password}
           onChangeText={(value) => setPassword(value)}
           right={
             !showPassword ? (
